@@ -39,9 +39,9 @@ class UserController extends Controller
         );
         if($this->userService->updateDosenPlp($request->all()))
         {
-            return redirect()->back()->with(AlertMessage::success('Berhasil menubah profil'));
+            return redirect()->back()->with(AlertMessage::success('Berhasil mengubah profil'));
         }
-        return redirect()->back()->with(AlertMessage::danger('Gagal menubah profil'));
+        return redirect()->back()->with(AlertMessage::danger('Gagal mengubah profil'));
     }
 
     public function changePassword(Request $request)

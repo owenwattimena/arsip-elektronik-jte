@@ -1,5 +1,9 @@
 @inject('prodiService', 'App\Services\ProgramStudiService')
 <ul class="sidebar-menu" data-widget="tree">
+    <div class="text-center" style="margin-top: 15px; margin-bottom: 15px">
+        <img src="{{ asset('assets/img/polnam.png') }}" width="60%" alt="">
+    </div>
+
     <li class="header">MAIN NAVIGATION</li>
     <li>
         <a href="{{ route('dosen.main') }}">

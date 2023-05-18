@@ -63,7 +63,7 @@
                     @forelse ($dokumen as $key => $item)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ $item->dokumen }}</a> </td>
+                        <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
                         <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
                         <td>{{ $item->created_at }}</td>
                     </tr>

@@ -40,7 +40,7 @@ class PenilaianController extends Controller
 
     public function nilai(Request $request, int $id, int $dosenPlpId)
     {
-        $data['dosenPlp'] = $this->userService->getDosenPlpById($id);
+        $data['dosenPlp'] = $this->userService->getDosenPlpById($dosenPlpId);
         $data['prodi'] = $this->programStudiService->getById($id);
         $data['tahunAkademik'] = $this->tahunAkademikService->getAll();
         $data['tahunAkademikId'] = null;

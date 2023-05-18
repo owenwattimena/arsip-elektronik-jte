@@ -27,13 +27,16 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page"   style="background-image: url('{{ asset('assets/img/jte-building.jpeg') }}'); background-size: cover">
     <div class="login-box">
         <div class="login-logo">
             <a href="../../index2.html"><b>{{ config('app.name') }}</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
+            <div class="text-center" style="margin-top: 15px; margin-bottom: 15px">
+                <img src="{{ asset('assets/img/polnam.png') }}" width="30%" alt="">
+            </div>
             <p class="login-box-msg">Masuk untuk memulai sesi anda.</p>
             @if(session('alert'))
             <div class="alert alert-{{ session('alert')['type'] }} alert-dismissible">
