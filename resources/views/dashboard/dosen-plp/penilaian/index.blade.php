@@ -81,9 +81,35 @@
                     <div class="alert alert-{{ $bkd->penilaian->terpenuhi? 'success':'danger' }}">
                         <h4><i class="icon fa fa-warning"></i> {!! $bkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
                     </div>
+                    <h4>Catatan:</h4>
+                    <p>{{ $bkd->penilaian->catatan ?? '-' }}</p>
+
+                    @if (!$bkd->penilaian->terpenuhi)
+                    <form action="{{ route('dosen.penilaian.update', [$prodi->id, $bkd->id]) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="dosen_plp_prodi_id" value="{{ $dosenPlpProdiId }}">
+                        <input type="hidden" name="tahun_akademik_id" value="{{ $tahunAkademikId }}">
+                        <input type="hidden" name="jenis_berkas" value="bkd">
+                        <input type="hidden" name="semester" value="{{ $semester }}">
+                        <div class="form-group">
+                            <label for="file_bkd">Unggah Ulang File BKD</label>
+                            <input type="file" id="file_bkd" name="berkas[]" multiple required>
+                            @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
+                        </div>
+                        <button class="btn btn-primary mb-5" type="submit">Unggah Ulang File</button>
+                    </form>
                     @endif
 
+                    @endif
+                    @if($bkd->berkas)
                     <embed src="{{ asset(Storage::url($bkd->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endif
+                    @if ($bkd->detail)
+                    @foreach ($bkd->detail as $item)
+                    <embed src="{{ asset(Storage::url($item->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endforeach
+                    @endif
                     @else
                     <p>Belum melakukan unggah berkas.</p>
                     <form action="{{ route('dosen.penilaian.create', $prodi->id) }}" method="post" enctype="multipart/form-data">
@@ -94,7 +120,7 @@
                         <input type="hidden" name="semester" value="{{ $semester }}">
                         <div class="form-group">
                             <label for="file_bkd">Unggah File BKD</label>
-                            <input type="file" id="file_bkd" name="berkas" required>
+                            <input type="file" id="file_bkd" name="berkas[]" multiple required>
                             @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
                         </div>
                         <button class="btn btn-primary" type="submit">Unggah File</button>
@@ -112,8 +138,34 @@
                     <div class="alert alert-{{ $lkd->penilaian->terpenuhi? 'success':'danger' }}">
                         <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
                     </div>
+                    <h4>Catatan:</h4>
+                    <p>{{ $lkd->penilaian->catatan ?? '-' }}</p>
+
+                    @if (!$lkd->penilaian->terpenuhi)
+                    <form action="{{ route('dosen.penilaian.update', [$prodi->id, $lkd->id]) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="dosen_plp_prodi_id" value="{{ $dosenPlpProdiId }}">
+                        <input type="hidden" name="tahun_akademik_id" value="{{ $tahunAkademikId }}">
+                        <input type="hidden" name="jenis_berkas" value="lkd">
+                        <input type="hidden" name="semester" value="{{ $semester }}">
+                        <div class="form-group">
+                            <label for="file_bkd">Unggah Ulang File LKD</label>
+                            <input type="file" id="file_bkd" name="berkas[]" multiple required>
+                            @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
+                        </div>
+                        <button class="btn btn-primary mb-5" type="submit">Unggah Ulang File</button>
+                    </form>
                     @endif
+                    @endif
+                    @if($lkd->berkas)
                     <embed src="{{ asset(Storage::url($lkd->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endif
+                    @if ($lkd->detail)
+                    @foreach ($lkd->detail as $item)
+                    <embed src="{{ asset(Storage::url($item->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endforeach
+                    @endif
                     @else
                     <p>Belum melakukan unggah berkas.</p>
                     <form action="{{ route('dosen.penilaian.create', $prodi->id) }}" method="post" enctype="multipart/form-data">
@@ -124,7 +176,7 @@
                         <input type="hidden" name="semester" value="{{ $semester }}">
                         <div class="form-group">
                             <label for="berkas-lkd">Unggah File LKD</label>
-                            <input type="file" id="berkas-lkd" name="berkas" required>
+                            <input type="file" id="berkas-lkd" name="berkas[]" multiple required>
                             @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
                         </div>
                         <button class="btn btn-primary" type="submit">Unggah File</button>
@@ -142,8 +194,34 @@
                     <div class="alert alert-{{ $skp->penilaian->terpenuhi? 'success':'danger' }}">
                         <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
                     </div>
+                    <h4>Catatan:</h4>
+                    <p>{{ $skp->penilaian->catatan ?? '-' }}</p>
+
+                    @if (!$skp->penilaian->terpenuhi)
+                    <form action="{{ route('dosen.penilaian.update', [$prodi->id, $skp->id]) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
+                        <input type="hidden" name="dosen_plp_prodi_id" value="{{ $dosenPlpProdiId }}">
+                        <input type="hidden" name="tahun_akademik_id" value="{{ $tahunAkademikId }}">
+                        <input type="hidden" name="jenis_berkas" value="skp">
+                        <input type="hidden" name="semester" value="{{ $semester }}">
+                        <div class="form-group">
+                            <label for="file_bkd">Unggah Ulang File SKP</label>
+                            <input type="file" id="file_bkd" name="berkas[]" multiple required>
+                            @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
+                        </div>
+                        <button class="btn btn-primary mb-5" type="submit">Unggah Ulang File</button>
+                    </form>
                     @endif
+                    @endif
+                    @if($skp->berkas)
                     <embed src="{{ asset(Storage::url($skp->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endif
+                    @if ($skp->detail)
+                    @foreach ($skp->detail as $item)
+                    <embed src="{{ asset(Storage::url($item->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endforeach
+                    @endif
                     @else
                     <p>Belum melakukan unggah berkas.</p>
                     <form action="{{ route('dosen.penilaian.create', $prodi->id) }}" method="post" enctype="multipart/form-data">
@@ -154,7 +232,7 @@
                         <input type="hidden" name="semester" value="{{ $semester }}">
                         <div class="form-group">
                             <label for="berkas-skp">Unggah File SKP</label>
-                            <input type="file" id="berkas-skp" name="berkas" required>
+                            <input type="file" id="berkas-skp" name="berkas[]" multiple required>
                             @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
                         </div>
                         <button class="btn btn-primary" type="submit">Unggah File</button>

@@ -15,6 +15,7 @@ interface UserService{
     public function updateDosenPlp(array $data): bool;
     public function delete(int $id): bool;
     public function getAll(): Collection;
+    public function get(?string $role) : Collection;
     public function findById(int $id): User;
     public function changePassword(array $data):bool;
 }

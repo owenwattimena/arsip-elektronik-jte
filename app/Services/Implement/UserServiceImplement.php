@@ -123,6 +123,10 @@ class UserServiceImplement implements UserService
     {
         return $this->userRepo->getAll()->where('role', '!=', 'admin');
     }
+    public function get(?string $role) : Collection
+    {
+        return $this->userRepo->get(role: $role);
+    }
     public function findById(int $id): User
     {
         return User::all()->first();

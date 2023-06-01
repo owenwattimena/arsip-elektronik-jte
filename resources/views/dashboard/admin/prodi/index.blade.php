@@ -45,14 +45,29 @@
                     <tr>
                         <th>NO</th>
                         <th>PROGRAM STUDI</th>
+                        <th>DOSEN</th>
+                        <th>PLP</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($prodi as $key => $item)
+                    @php
+                        $totalDosen=0;
+                        $totalPlp=0;
+                        foreach ($item->dosen as $key => $value) {
+                            if($value->user->role == 'dosen'){
+                                ++$totalDosen;
+                            }else if($value->user->role == 'plp'){
+                                ++$totalPlp;
+                            }
+                        }
+                    @endphp
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $item->program_studi }}</td>
+                        <td>{{ $totalDosen }}</td>
+                        <td>{{ $totalPlp }}</td>
                     </tr>
                     @empty
                     <tr>

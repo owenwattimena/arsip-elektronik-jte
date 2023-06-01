@@ -45,6 +45,6 @@ class DosenPlpProdi extends Model
      */
     public function dosenPlp(): HasOne
     {
-        return $this->hasOne(DosenPlp::class, 'id', 'dosen_id');
+        return $this->hasOne(DosenPlp::class, 'id', 'dosen_plp_id');
     }
 }

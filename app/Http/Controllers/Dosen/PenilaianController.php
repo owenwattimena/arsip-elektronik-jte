@@ -53,13 +53,23 @@ class PenilaianController extends Controller
     public function create(Request $request, int $prodiId)
     {
         $request->validate([
-            'berkas'=> 'required|file|mimes:pdf'
+            'berkas'=> 'required'
         ]);
-
         if($this->berkasService->create($request->except(['_token'])))
         {
             return redirect()->back()->with(AlertMessage::success('Berhasil mengunggah berkas.'));
         }
         return redirect()->back()->with(AlertMessage::danger('Gagal mengunggah berkas.'));
     }
-}
+
+    public function update(Request $request, int $prodiId, int $berkasId)
+    {
+        $request->validate(['berkas'=>'required']);
+
+        if($this->berkasService->update($berkasId, $request->except(['_token', '_method'])))
+        {
+            return redirect()->back()->with(AlertMessage::success('Berhasil mengunggah ulang berkas.'));
+        }
+        return redirect()->back()->with(AlertMessage::danger('Gagal mengunggah ulang berkas.'));
+    }
+ }

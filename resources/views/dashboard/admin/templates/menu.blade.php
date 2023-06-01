@@ -43,6 +43,11 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('admin.informasi') }}">
+            <i class="fa fa-info"></i> <span>Pemberitahuan</span>
+        </a>
+    </li>
+    <li>
         <a href="{{ route('admin.user') }}">
             <i class="fa fa-user"></i> <span>User</span>
         </a>

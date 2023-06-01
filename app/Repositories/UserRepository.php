@@ -9,6 +9,7 @@ interface UserRepository{
     public function update(int $id, array $data): bool;
     public function delete(int $id): bool;
     public function getAll(): Collection;
+    public function get(?string $role) : Collection;
     public function findById(int $id): User;
     public function changePassword(int $id, string $password):bool;
 }

@@ -14,4 +14,8 @@ class PenilaianRepositoryImplement implements PenilaianRepository
     {
         return $this->model->create($data);
     }
+
+    public function delete(int $berkasId):bool{
+        return $this->model->where('berkas_id', $berkasId)->delete() > 0;
+    }
 }

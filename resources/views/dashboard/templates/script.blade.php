@@ -12,6 +12,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dashboard') }}/dist/js/demo.js"></script>
 @yield('script')
+@livewireScripts
 <script>
 
   $(document).ready(function () {

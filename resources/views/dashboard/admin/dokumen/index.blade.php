@@ -9,45 +9,7 @@
         <h3 class="box-title">Dokumen</h3>
     </div>
     <div class="box-body">
-        <div class="text-right">
-            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-tambah"> <i class="fa fa-plus"></i> Tambah</button>
-        </div>
-        <div class="modal fade" id="modal-tambah">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"> Unggah Dokumen</h4>
-                    </div>
-                    <form action="{{ route('admin.dokumen.create') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="form-group @error('dokumen') has-error @enderror">
-                                <label for="dokumen">DOKUMEN</label>
-                                <input type="file" class="form-control" name="dokumen" id="dokumen" value="{{ old('dokumen') }}" placeholder="Masukan program studi" required>
-                                @error('dokumen') <span class="help-block">{{ $message }}</span> <br> @enderror
-                            </div>
-                            <div class="form-group @error('dilihat_oleh') has-error @enderror">
-                                <label for="dilihat_oleh">DILIHAT OLEH</label>
-                                <select class="form-control" name="dilihat_oleh" id="dilihat_oleh" required>
-                                    <option value="all">Semua</option>
-                                    <option value="dosen">Dosen</option>
-                                    <option value="plp">PLP</option>
-                                </select>
-                                @error('dilihat_oleh') <span class="help-block">{{ $message }}</span> <br> @enderror
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+        @livewire('admin.dokumen.tambah')
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -64,7 +26,7 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
-                        <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
+                        <td>{{ config('app.'.$item->dilihat_oleh) }} {{ isset($item->akses) ? "- ".$item->akses->dosenPlp->nama_lengkap . " ({$item->akses->dosenPlp->nip})" : ''}}</td>
                         <td>{{ $item->created_at }}</td>
                     </tr>
                     @empty

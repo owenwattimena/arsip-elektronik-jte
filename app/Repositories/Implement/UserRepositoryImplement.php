@@ -33,6 +33,15 @@ class UserRepositoryImplement implements UserRepository
     {
         return $this->user->all();
     }
+    public function get(?string $role) : Collection
+    {
+        $query = $this->user->query();
+        if($role)
+        {
+            $query->where('role', $role);
+        }
+        return $query->get();
+    }
     public function findById(int $id): User
     {
         return User::all()->first();

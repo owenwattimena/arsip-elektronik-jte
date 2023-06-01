@@ -7,10 +7,12 @@ use App\Services\BerkasService;
 use App\Services\DokumenService;
 use App\Services\Implement\BerkasServiceImplement;
 use App\Services\Implement\DokumenServiceImplement;
+use App\Services\Implement\InformasiServiceImplement;
 use App\Services\Implement\PengaturanServiceImplement;
 use App\Services\Implement\PenilaianServiceImplement;
 use App\Services\Implement\ProgramStudiServiceImplement;
 use App\Services\Implement\TahunAkademikServiceImplement;
+use App\Services\InformasiService;
 use App\Services\PengaturanService;
 use App\Services\PenilaianService;
 use App\Services\ProgramStudiService;
@@ -47,6 +49,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(PengaturanService::class, function (Application $app){
             return $app->make(PengaturanServiceImplement::class);
+        });
+        $this->app->singleton(InformasiService::class, function (Application $app){
+            return $app->make(InformasiServiceImplement::class);
         });
     }
 

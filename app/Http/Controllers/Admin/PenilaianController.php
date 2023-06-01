@@ -63,10 +63,14 @@ class PenilaianController extends Controller
 
     public function create(Request $request)
     {
-        if($this->penilaianService->create($request->except(['_token', 'tahun_akademik_id', 'semester'])))
-        {
-            return redirect()->back()->with(AlertMessage::success('Penilaian berhasil dilakukan.'));
+        try {
+            if($this->penilaianService->create($request->except(['_token', 'tahun_akademik_id', 'semester'])))
+            {
+                return redirect()->back()->with(AlertMessage::success('Penilaian berhasil dilakukan.'));
+            }
+            return redirect()->back()->with(AlertMessage::danger('Penilaian gagal dilakukan.'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(AlertMessage::danger('Penilaian gagal dilakukan. ' . $e->getMessage()));
         }
-        return redirect()->back()->with(AlertMessage::danger('Penilaian gagal dilakukan.'));
     }
 }

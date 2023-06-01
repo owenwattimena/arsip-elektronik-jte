@@ -8,11 +8,13 @@ use App\Repositories\DosenPlpRepository;
 use App\Repositories\Implement\BerkasRepositoryImplement;
 use App\Repositories\Implement\DokumenRepositoryImplement;
 use App\Repositories\Implement\DosenPlpRepositoryImplement;
+use App\Repositories\Implement\InformasiRepositoryImplement;
 use App\Repositories\Implement\PengaturanRepositoryImplement;
 use App\Repositories\Implement\PenilaianRepositoryImplement;
 use App\Repositories\Implement\ProgramStudiRepositoryImplement;
 use App\Repositories\Implement\TahunAkademikRepositoryImplement;
 use App\Repositories\Implement\UserRepositoryImplement;
+use App\Repositories\InformasiRepository;
 use App\Repositories\PengaturanRepository;
 use App\Repositories\PenilaianRepository;
 use App\Repositories\ProgramStudiRepository;
@@ -51,6 +53,9 @@ class RepositoryProvider extends ServiceProvider
         });
         $this->app->singleton(PengaturanRepository::class, function(Application $app){
             return $app->make(PengaturanRepositoryImplement::class);
+        });
+        $this->app->singleton(InformasiRepository::class, function(Application $app){
+            return $app->make(InformasiRepositoryImplement::class);
         });
     }
 

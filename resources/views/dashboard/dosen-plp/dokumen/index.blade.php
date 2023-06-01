@@ -22,12 +22,24 @@
                 </thead>
                 <tbody>
                     @forelse ($dokumen as $key => $item)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
-                        <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
-                        <td>{{ $item->created_at }}</td>
-                    </tr>
+                    @if ($item->dilihat_oleh == "all")
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
+                            <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
+                            <td>{{ $item->created_at }}</td>
+                        </tr>
+                        @else
+
+                        @if ($item->akses && $item->akses->dosen_plp_id == auth()->user()->dosenPlp->id)
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
+                            <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
+                            <td>{{ $item->created_at }}</td>
+                        </tr>
+                        @endif
+                    @endif
                     @empty
                     <tr>
                         <td>Tidak ada data.</td>

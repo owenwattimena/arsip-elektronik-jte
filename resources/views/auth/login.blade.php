@@ -37,7 +37,7 @@
             <div class="text-center" style="margin-top: 15px; margin-bottom: 15px">
                 <img src="{{ asset('assets/img/polnam.png') }}" width="30%" alt="">
             </div>
-            <p class="login-box-msg">Masuk untuk memulai sesi anda.</p>
+            <p class="login-box-msg">Hai Admin, Dosen atau PLP, masuk untuk memulai sesi anda. </p>
             @if(session('alert'))
             <div class="alert alert-{{ session('alert')['type'] }} alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -47,7 +47,7 @@
             <form action="{{ route('auth.login.post') }}" method="post">
                 @csrf
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="username" placeholder="NIP">
+                    <input type="text" class="form-control" name="username" placeholder="Username">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @error('username') <span class="help-block">{{ $message }}</span> <br> @enderror
 

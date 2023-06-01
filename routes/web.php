@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DokumenController;
+use App\Http\Controllers\Admin\PemberitahuanController;
 use App\Http\Controllers\Admin\PenilaianController;
 use App\Http\Controllers\Admin\ProgramStudiController;
 use App\Http\Controllers\Admin\TahunAkademikController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dosen\MainController;
+use App\Models\Penilaian;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +23,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('/');
+Route::get('/', function () {
+    $data = Penilaian::with(['berkas'=>function($query){
+        return $query->with(['tahunAkademik','dosenPlpProdi'=>function($query){
+            return $query->with(['dosenPlp', 'prodi']);
+        }]);
+    }])->findOrFail(1);
+    dd($data);
+    if(Auth::check())
+    {
+        if(Auth::user()->role == 'admin')
+        {
+            return redirect()->route('admin.main');
+        }
+        return redirect()->route('dosen.main');
+    }
+    return redirect()->route('auth.login');
+
+})->name('/');
 Route::get('/index.html', function () {
     return view('dashboard.templates.index');
 });
@@ -41,12 +58,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile.html', [\App\Http\Controllers\PengaturanController::class, 'index'])->name('dosen.profile');
         Route::get('/penilaian/prodi/{id}', [\App\Http\Controllers\Dosen\PenilaianController::class, 'index'])->name('dosen.penilaian');
         Route::post('/penilaian/prodi/{id}', [\App\Http\Controllers\Dosen\PenilaianController::class, 'create'])->name('dosen.penilaian.create');
+        Route::put('/penilaian/prodi/{id}/berkas/{berkasId}', [\App\Http\Controllers\Dosen\PenilaianController::class, 'update'])->name('dosen.penilaian.update');
         Route::get('/profil', [\App\Http\Controllers\Dosen\UserController::class, 'index'])->name('dosen.profil');
         Route::put('/profil', [\App\Http\Controllers\Dosen\UserController::class, 'update'])->name('dosen.profil.update');
         Route::put('/profil/change-password', [\App\Http\Controllers\Dosen\UserController::class, 'changePassword'])->name('dosen.profil.change-password');
         Route::get('/dokumen', [\App\Http\Controllers\Dosen\DokumenController::class, 'index'])->name('dosen.dokumen');
 
     });
+
     Route::prefix('admin')->middleware(['admin'])->group(function(){
         Route::get('/home.html', [\App\Http\Controllers\Admin\MainController::class, 'index'])->name('admin.main');
         Route::get('/profile.html', [\App\Http\Controllers\PengaturanController::class, 'index'])->name('admin.profile');
@@ -65,6 +84,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/dokumen', [DokumenController::class, 'index'])->name('admin.dokumen');
         Route::post('/dokumen', [DokumenController::class, 'create'])->name('admin.dokumen.create');
+
+        Route::get('/pemberitahuan', [PemberitahuanController::class, 'index'])->name('admin.informasi');
+        Route::post('/pemberitahuan', [PemberitahuanController::class, 'create'])->name('admin.informasi.create');
+        Route::delete('/pemberitahuan', [PemberitahuanController::class, 'delete'])->name('admin.informasi.delete');
 
         Route::get('user', [UserController::class, 'index'])->name('admin.user');
         Route::post('user', [UserController::class, 'create'])->name('admin.user.create');

@@ -27,6 +27,8 @@ class DokumenController extends Controller
             'dokumen' => 'required',
             'dilihat_oleh' => 'required'
         ]);
+        // dd($request->all());
+
 
         if($this->dokumenService->create($request->except(['_token'])))
         {

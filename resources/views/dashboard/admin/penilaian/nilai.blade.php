@@ -75,9 +75,17 @@
                     <div class="alert alert-{{ $bkd->penilaian->terpenuhi? 'success':'danger' }}">
                         <h4><i class="icon fa fa-warning"></i> {!! $bkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
                     </div>
+                    <h4>Catatan:</h4>
+                    <p>{{ $bkd->penilaian->catatan ?? '-' }}</p>
                     @endif
-
+                    @if($bkd->berkas)
                     <embed src="{{ asset(Storage::url($bkd->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endif
+                    @if($bkd->detail)
+                    @foreach ($bkd->detail as $item)
+                    <embed src="{{ asset(Storage::url($item->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endforeach
+                    @endif
                     @if (!$bkd->penilaian)
                     <h4>Penilaian</h4>
                     <form action="" method="post">
@@ -91,6 +99,11 @@
                                 <option value="false">Tidak Terpenuhi</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea class="form-control" name="catatan" placeholder="Jika ada catatan silahkan masukan di sini."></textarea>
+                        </div>
+
                         <button class="btn btn-success btn-block">Nilai</button>
                     </form>
                     @endif
@@ -106,7 +119,7 @@
                         <input type="hidden" name="semester" value="{{ $semester }}">
                         <div class="form-group">
                             <label for="file_bkd">Unggah File BKD</label>
-                            <input type="file" id="file_bkd" name="berkas" required>
+                            <input type="files" id="file_bkd" name="berkas[]" multiple required>
                             @error('berkas') <span class="help-block text-red">{{ $message }}</span> <br> @enderror
                         </div>
                         <button class="btn btn-primary" type="submit">Unggah File</button>
@@ -127,8 +140,17 @@
                     <div class="alert alert-{{ $lkd->penilaian->terpenuhi? 'success':'danger' }}">
                         <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
                     </div>
+                    <h4>Catatan:</h4>
+                    <p>{{ $lkd->penilaian->catatan ?? '-' }}</p>
                     @endif
+                    @if ($lkd->berkas)
                     <embed src="{{ asset(Storage::url($lkd->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endif
+                    @if($lkd->detail)
+                    @foreach ($lkd->detail as $item)
+                    <embed src="{{ asset(Storage::url($item->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endforeach
+                    @endif
                     @if (!$lkd->penilaian)
                     <h4>Penilaian</h4>
                     <form action="" method="post">
@@ -141,6 +163,10 @@
                                 <option value="true">Terpenuhi</option>
                                 <option value="false">Tidak Terpenuhi</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea class="form-control" name="catatan" placeholder="Jika ada catatan silahkan masukan di sini."></textarea>
                         </div>
                         <button class="btn btn-success btn-block">Nilai</button>
                     </form>
@@ -176,8 +202,17 @@
                     <div class="alert alert-{{ $skp->penilaian->terpenuhi? 'success':'danger' }}">
                         <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
                     </div>
+                    <h4>Catatan:</h4>
+                    <p>{{ $skp->penilaian->catatan ?? '-' }}</p>
                     @endif
+                    @if($skp->berkas)
                     <embed src="{{ asset(Storage::url($skp->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endif
+                    @if($skp->detail)
+                    @foreach ($skp->detail as $item)
+                    <embed src="{{ asset(Storage::url($item->berkas)) }}" width="100%" style="height: 600px;" />
+                    @endforeach
+                    @endif
                     @if (!$skp->penilaian)
                     <h4>Penilaian</h4>
                     <form action="" method="post">
@@ -190,6 +225,10 @@
                                 <option value="true">Terpenuhi</option>
                                 <option value="false">Tidak Terpenuhi</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea class="form-control" name="catatan" placeholder="Jika ada catatan silahkan masukan di sini."></textarea>
                         </div>
                         <button class="btn btn-success btn-block">Nilai</button>
                     </form>
