@@ -9,7 +9,7 @@
         <h3 class="box-title">Dokumen</h3>
     </div>
     <div class="box-body">
-        @livewire('admin.dokumen.tambah')
+        <livewire:admin.dokumen.tambah>
         <div class="table-responsive">
             <table class="table">
                 <thead>
