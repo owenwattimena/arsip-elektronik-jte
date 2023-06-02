@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $data = Penilaian::with(['berkas'=>function($query){
-        return $query->with(['tahunAkademik','dosenPlpProdi'=>function($query){
-            return $query->with(['dosenPlp', 'prodi']);
-        }]);
-    }])->findOrFail(1);
-    dd($data);
+    // $data = Penilaian::with(['berkas'=>function($query){
+    //     return $query->with(['tahunAkademik','dosenPlpProdi'=>function($query){
+    //         return $query->with(['dosenPlp', 'prodi']);
+    //     }]);
+    // }])->findOrFail(1);
+    // dd($data);
     if(Auth::check())
     {
         if(Auth::user()->role == 'admin')
