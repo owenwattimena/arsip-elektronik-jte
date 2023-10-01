@@ -9,7 +9,7 @@
 
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper"  style="background-image: url('{{ asset('assets/img/jte-building.jpeg') }}'); background-size: cover">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>

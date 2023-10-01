@@ -15,7 +15,7 @@ class Penilaian extends Model
 
     protected $fillable = [
         "berkas_id",
-        "terpenuhi",
+        "nilai",
         "catatan",
         "created_by",
     ];

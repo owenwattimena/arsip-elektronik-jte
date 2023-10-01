@@ -1,6 +1,8 @@
 @extends('dashboard.dosen-plp.templates.index')
 
-@section('title', 'Dokumen')
+@section('title')
+Dokumen {{ $jenisDokumen }}
+@endsection
 @section('sub-title', 'Daftar')
 
 @section('content')
@@ -13,7 +15,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>NO</th>
+                        {{-- <th>NO</th> --}}
                         <th>DOKUMEN</th>
                         <th>DILIHAT OLEH</th>
                         <th>DIBUAT TANGGAL</th>
@@ -22,24 +24,37 @@
                 </thead>
                 <tbody>
                     @forelse ($dokumen as $key => $item)
-                    @if ($item->dilihat_oleh == "all")
+                        @if ($item->dilihat_oleh == "all")
                         <tr>
-                            <td>{{ ++$key }}</td>
+                            {{-- <td>{{ ++$key }}</td> --}}
                             <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
                             <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
                             <td>{{ $item->created_at }}</td>
                         </tr>
                         @else
+                            @if ($item->dilihat_oleh == auth()->user()->role . "_all")
+                            <tr>
+                                {{-- <td>{{ ++$key }}</td> --}}
+                                <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
+                                <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
+                                <td>{{ $item->created_at }}</td>
+                            </tr>
+                            @endif
 
-                        @if ($item->akses && $item->akses->dosen_plp_id == auth()->user()->dosenPlp->id)
-                        <tr>
-                            <td>{{ ++$key }}</td>
-                            <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
-                            <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
-                            <td>{{ $item->created_at }}</td>
-                        </tr>
+
+                            @if ($item->akses)
+                                @foreach ($item->akses as $akses)
+                                    @if($akses->dosen_plp_id == auth()->user()->dosenPlp->id)
+                                    <tr>
+                                        {{-- <td>{{ ++$key }}</td> --}}
+                                        <td> <a href="{{ asset(Storage::url($item->dokumen)) }}" target="_blank">{{ getFileName($item->dokumen) }}</a> </td>
+                                        <td>{{ config('app.'.$item->dilihat_oleh) }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+                            @endif
                         @endif
-                    @endif
                     @empty
                     <tr>
                         <td>Tidak ada data.</td>
@@ -57,3 +72,5 @@
 </div>
 <!-- /.box -->
 @endsection
+
+

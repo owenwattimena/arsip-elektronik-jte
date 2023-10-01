@@ -44,7 +44,7 @@ class UserRepositoryImplement implements UserRepository
     }
     public function findById(int $id): User
     {
-        return User::all()->first();
+        return User::findOrFail($id);
     }
 
     public function changePassword(int $id, string $password):bool

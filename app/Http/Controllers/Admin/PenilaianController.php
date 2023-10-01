@@ -63,6 +63,7 @@ class PenilaianController extends Controller
 
     public function create(Request $request)
     {
+        // dd($request->input());
         try {
             if($this->penilaianService->create($request->except(['_token', 'tahun_akademik_id', 'semester'])))
             {

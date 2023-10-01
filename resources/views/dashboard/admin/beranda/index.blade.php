@@ -44,7 +44,7 @@
                     <a href="javascript:void(0)" class="product-title">{{ $item->tipe }}
                         <span class="label label-warning pull-right">{{ $item->created_at }}</span></a>
                     <span class="product-description">
-                    {{ $item->deskripsi }}
+                    {{ str_replace("program studi PLP ", "", $item->deskripsi) }}
                     </span>
                 </div>
             </li>

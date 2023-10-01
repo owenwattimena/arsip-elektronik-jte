@@ -14,12 +14,34 @@ class DokumenRepositoryImplement implements DokumenRepository
         $this->dokumenModel = $dokumenModel;
         $this->dokumenAksesModel = $dokumenAksesModel;
     }
-    public function getAll():Collection{
-        return $this->dokumenModel->all();
+    public function getAll(?string $jenis=null):Collection{
+        $query = $this->dokumenModel->query();
+        if($jenis)
+        {
+            $query = $query->where('jenis', $jenis);
+        }
+        return $query->get();
     }
-    public function get(string $role):Collection
+    public function get(string $role, ?string $jenis=null):Collection
     {
-        return $this->dokumenModel->where('dilihat_oleh', 'all')->orWhere('dilihat_oleh', $role)->get();
+        $query = $this->dokumenModel->query();
+        $query = $query->where('dilihat_oleh', 'all')->orWhere('dilihat_oleh', $role)->orWhere('dilihat_oleh', "${role}_all");
+        // if($role == 'dosen')
+        // {
+        //     $query = $query->where('dilihat_oleh', 'dosen_all');
+        // }
+
+        // if($jenis != null)
+        // {
+        //     $query = $query->where('jenis', $jenis);
+        // }
+        $result = $query->get();
+        if($jenis != null)
+        {
+            $result = $result->where('jenis', $jenis);
+        }
+        // dd($result);
+        return $result;
         // return $this->dokumenModel->where('dilihat_oleh', 'all')->with(["akses"=>function($query){
         //     return $query->where('dosen_plp_id', 2)->get();
         // }])->get();

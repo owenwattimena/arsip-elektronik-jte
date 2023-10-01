@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('dosen_plp_prodi_id');
             $table->unsignedBigInteger('tahun_akademik_id');
             $table->enum('jenis_berkas', ['bkd', 'lkd', 'skp']);
-            $table->string('berkas');
+            $table->string('berkas')->nullable();
             $table->enum('semester', ['ganjil', 'genap']);
             $table->timestamps();
 

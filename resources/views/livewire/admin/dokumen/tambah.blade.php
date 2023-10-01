@@ -14,6 +14,7 @@
                     {{-- <form action="{{ route('admin.dokumen.create') }}" method="POST" enctype="multipart/form-data"> --}}
                     @csrf
                     <div class="modal-body">
+                        <input type="hidden" name="jenis" value="{{ $jenis }}">
                         <div class="form-group @error('dokumen') has-error @enderror">
                             <label for="dokumen">DOKUMEN</label>
                             <input type="file" class="form-control" name="dokumen" id="dokumen" value="{{ old('dokumen') }}" placeholder="Masukan program studi" required>
@@ -32,7 +33,7 @@
                         @if ($users)
                         <div class="form-group @error('dosen_plp_id') has-error @enderror">
                             <label for="dosen_plp_id">{{ strtoupper($dilihatOleh) }}</label>
-                            <select class="form-control" name="dosen_plp_id" wire:model="dosenPlpId" id="dosen_plp_id" required>
+                            <select wire:ignore class="form-control select2" style="width: 100%;" multiple="multiple" name="dosen_plp_id[]" wire:model="dosenPlpId" id="dosen_plp_id">
                                 <option value="">---Pilih {{ $dilihatOleh }}---</option>
                                 @foreach ($users as $item)
                                 <option value="{{ $item->dosenPlp->id }}">{{ $item->dosenPlp->nama_lengkap }}</option>
@@ -40,6 +41,9 @@
                             </select>
                             @error('dosen_plp_id') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
+                        <script>
+                             $('.select2').select2();
+                        </script>
                         @endif
 
                     </div>
@@ -54,3 +58,14 @@
     </div>
     <!-- /.modal -->
 </div>
+@section('script')
+<!-- Select2 -->
+<script src="{{ asset('assets/dashboard/bower_components/select2/dist/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+<script>
+
+$(document).ready(function(){
+    $('.select2').select2();
+});
+</script>
+@endsection

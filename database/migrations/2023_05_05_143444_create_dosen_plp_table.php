@@ -16,15 +16,17 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('nama_lengkap');
             $table->string('nip')->unique()->nullable();
+            $table->string('nidn')->unique()->nullable();
+            $table->string('jabatan_fungsional')->nullable();
             $table->string('pangkat_golongan')->nullable();
-            $table->enum('jenis_kelamin', ['l', 'p']);
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->string('agama');
-            $table->mediumText('alamat');
-            $table->string('telepon');
-            $table->string('email')->unique();
-            $table->string('foto');
+            $table->enum('jenis_kelamin', ['l', 'p'])->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('agama')->nullable();
+            $table->mediumText('alamat')->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('email')->nullable();
+            $table->string('foto')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
         });

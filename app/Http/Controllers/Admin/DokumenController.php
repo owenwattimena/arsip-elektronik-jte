@@ -15,6 +15,20 @@ class DokumenController extends Controller
         $this->dokumenService = $dokumenService;
     }
 
+    public function suratKetetapan()
+    {
+        $data['jenisDokumen'] = "SK Direktur";
+        $data['jenis'] = 'sk';
+        $data['dokumen'] = $this->dokumenService->getAll(jenis: 'sk');
+        return view('dashboard.admin.dokumen.index', $data);
+    }
+    public function suratTugas()
+    {
+        $data['jenisDokumen'] = "Surat Tugas";
+        $data['jenis'] = 'surat_tugas';
+        $data['dokumen'] = $this->dokumenService->getAll(jenis: 'surat_tugas');
+        return view('dashboard.admin.dokumen.index', $data);
+    }
     public function index()
     {
         $data['dokumen'] = $this->dokumenService->getAll();
@@ -29,11 +43,15 @@ class DokumenController extends Controller
         ]);
         // dd($request->all());
 
+        try {
+            if($this->dokumenService->create($request->except(['_token'])))
+            {
+                return redirect()->back()->with(AlertMessage::success('Berhasil mengunggah dokumen'));
+            }
+            return redirect()->back()->with(AlertMessage::danger('Gagal mengunggah dokumen'));
 
-        if($this->dokumenService->create($request->except(['_token'])))
-        {
-            return redirect()->back()->with(AlertMessage::success('Berhasil mengunggah dokumen'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with(AlertMessage::danger('Gagal mengunggah dokumen. ' . $e->getMessage()));
         }
-        return redirect()->back()->with(AlertMessage::danger('Gagal mengunggah dokumen'));
     }
 }

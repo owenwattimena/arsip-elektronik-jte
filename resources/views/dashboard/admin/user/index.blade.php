@@ -1,5 +1,8 @@
 @extends('dashboard.admin.templates.index')
-
+@section('style')
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('assets/dashboard') }}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+@endsection
 @section('title', 'User')
 @section('sub-title', 'Daftar')
 
@@ -12,6 +15,7 @@
         <div class="text-right">
             <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-tambah"> <i class="fa fa-plus"></i> Tambah</button>
         </div>
+        <br>
         <div class="modal fade" id="modal-tambah">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -28,14 +32,42 @@
                                 <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap') }}" placeholder="Masukan nama lengkap" required>
                                 @error('nama_lengkap') <span class="help-block">{{ $message }}</span> <br> @enderror
                             </div>
+                            <div class="form-group @error('nidn') has-error @enderror">
+                                <label for="nidn">NIDN</label>
+                                <input type="text" class="form-control" name="nidn" id="nidn" value="{{ old('nidn') }}" placeholder="Masukan NIDN">
+                                @error('nidn') <span class="help-block">{{ $message }}</span> <br> @enderror
+                            </div>
                             <div class="form-group @error('nip') has-error @enderror">
                                 <label for="nip">NIP</label>
                                 <input type="text" class="form-control" name="nip" id="nip" value="{{ old('nip') }}" placeholder="Masukan NIP">
                                 @error('nip') <span class="help-block">{{ $message }}</span> <br> @enderror
                             </div>
+                            <div class="form-group @error('jabatan_fungsional') has-error @enderror">
+                                <label for="nidn">JABATAN FUNGSIONAL</label>
+                                <select class="form-control" name="jabatan_fungsional">
+                                    <option value="">---PILIH JABATAN FUNGSIONAL---</option>
+                                    <option value="Asisten Ahli">Asisten Ahli</option>
+                                    <option value="Lektor">Lektor</option>
+                                    <option value="Lektor Kepala">Lektor Kepala</option>
+                                </select>
+                                @error('jabatan_fungsional') <span class="help-block">{{ $message }}</span> <br> @enderror
+                            </div>
                             <div class="form-group @error('pangkat_golongan') has-error @enderror">
-                                <label for="pangkat_golongan">PANGKAT/GOLONGAN</label>
-                                <input type="text" class="form-control" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}" placeholder="Masukan pangkat/golongan">
+                                <label for="nidn">PANGKAT GOLONGAN</label>
+                                <select class="form-control" name="pangkat_golongan">
+                                    <option value="">---PILIH PANGKAT GOLONGAN---</option>
+                                    <option value="II/A">II/A</option>
+                                    <option value="II/B">II/B</option>
+                                    <option value="II/C">II/C</option>
+                                    <option value="II/D">II/D</option>
+                                    <option value="III/A">III/A</option>
+                                    <option value="III/B">III/B</option>
+                                    <option value="III/C">III/C</option>
+                                    <option value="III/D">III/D</option>
+                                    <option value="IV/A">IV/A</option>
+                                    <option value="IV/B">IV/B</option>
+                                    <option value="IV/C">IV/C</option>
+                                </select>
                                 @error('pangkat_golongan') <span class="help-block">{{ $message }}</span> <br> @enderror
                             </div>
                             <div class="form-group @error('program_studi') has-error @enderror">
@@ -56,7 +88,7 @@
                                 </select>
                                 @error('status') <span class="help-block">{{ $message }}</span> <br> @enderror
                             </div>
-                            <div class="form-group @error('program_studi_id') has-error @enderror">
+                            <div id="prodi" class="form-group @error('program_studi_id') has-error @enderror">
                                 <label for="status">PROGRAM STUDI</label>
                                 @foreach ($prodi as $item)
                                 <div class="checkbox">
@@ -80,7 +112,7 @@
         </div>
         <!-- /.modal -->
         <div class="table-responsive">
-            <table class="table">
+            <table id="table" class="table">
                 <thead>
                     <tr>
                         <th>NO</th>
@@ -101,6 +133,9 @@
                         <td>{{ $item->dosenPlp->nip }}</td>
                         <td>{{ config('app.jenis_kelamin.'.$item->dosenPlp->jenis_kelamin) }}</td>
                         <td>{{ config('app.'.$item->role) }}</td>
+                        <td>
+                            <a href="{{route('admin.user.biodata', $item->id)}}" class="btn btn-primary btn-xs">BIODATA</a>
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -118,4 +153,33 @@
     <!-- /.box-footer-->
 </div>
 <!-- /.box -->
+@endsection
+@section('script')
+<!-- DataTables -->
+<script src="{{ asset('assets/dashboard') }}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('assets/dashboard') }}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script>
+    $(function() {
+        // $('#table').dataTable();
+
+        $("#status").on("change", function(){
+            if($(this).val() == 'plp'){
+                showProdi(false);
+            }else{
+                showProdi(true);
+            }
+        });
+    })
+
+    function showProdi(val=true)
+    {
+        if(val)
+        {
+            $("#prodi").show();
+        }else{
+            $("#prodi").hide();
+        }
+    }
+
+</script>
 @endsection

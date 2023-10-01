@@ -61,8 +61,6 @@
         <h3 class="box-title">Berkas</h3>
     </div>
     <div class="box-body">
-
-
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -78,13 +76,13 @@
                         <h4><i class="icon fa fa-warning"></i> Dokumen belum dinilai!</h4>
                     </div>
                     @else
-                    <div class="alert alert-{{ $bkd->penilaian->terpenuhi? 'success':'danger' }}">
-                        <h4><i class="icon fa fa-warning"></i> {!! $bkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    <div class="alert alert-{{ $bkd->penilaian->nilai == 'Dibawah Ekspetasi' ? 'warning': ( $bkd->penilaian->nilai == 'Sesuai Ekspetasi' ? 'success' : 'info' ) }}">
+                        <h4><i class="icon fa fa-warning"></i> Dokemen telah di nilai <b>{{ $bkd->penilaian->nilai }}</b></h4>
                     </div>
+                    <h4>Nilai: {{ $bkd->penilaian->nilai == 'Dibawah Ekspetasi' ? '1': ( $bkd->penilaian->nilai == 'Sesuai Ekspetasi' ? '2' : '3' ) }}</h4>
                     <h4>Catatan:</h4>
                     <p>{{ $bkd->penilaian->catatan ?? '-' }}</p>
-
-                    @if (!$bkd->penilaian->terpenuhi)
+                    {{-- @if (!$bkd->penilaian->terpenuhi)
                     <form action="{{ route('dosen.penilaian.update', [$prodi->id, $bkd->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
@@ -99,7 +97,7 @@
                         </div>
                         <button class="btn btn-primary mb-5" type="submit">Unggah Ulang File</button>
                     </form>
-                    @endif
+                    @endif --}}
 
                     @endif
                     @if($bkd->berkas)
@@ -135,13 +133,17 @@
                         <h4><i class="icon fa fa-warning"></i> Dokumen belum dinilai!</h4>
                     </div>
                     @else
-                    <div class="alert alert-{{ $lkd->penilaian->terpenuhi? 'success':'danger' }}">
-                        <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    <div class="alert alert-{{ $lkd->penilaian->nilai == 'Dibawah Ekspetasi' ? 'warning': ( $lkd->penilaian->nilai == 'Sesuai Ekspetasi' ? 'success' : 'info' ) }}">
+                        <h4><i class="icon fa fa-warning"></i> Dokemen telah di nilai <b>{{ $lkd->penilaian->nilai }}</b></h4>
                     </div>
+                    {{-- <div class="alert alert-{{ $lkd->penilaian->terpenuhi? 'success':'danger' }}">
+                        <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    </div> --}}
+                    <h4>Nilai: {{ $lkd->penilaian->nilai == 'Dibawah Ekspetasi' ? '1': ( $lkd->penilaian->nilai == 'Sesuai Ekspetasi' ? '2' : '3' ) }}</h4>
                     <h4>Catatan:</h4>
                     <p>{{ $lkd->penilaian->catatan ?? '-' }}</p>
 
-                    @if (!$lkd->penilaian->terpenuhi)
+                    {{-- @if (!$lkd->penilaian->terpenuhi)
                     <form action="{{ route('dosen.penilaian.update', [$prodi->id, $lkd->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
@@ -156,7 +158,7 @@
                         </div>
                         <button class="btn btn-primary mb-5" type="submit">Unggah Ulang File</button>
                     </form>
-                    @endif
+                    @endif --}}
                     @endif
                     @if($lkd->berkas)
                     <embed src="{{ asset(Storage::url($lkd->berkas)) }}" width="100%" style="height: 600px;" />
@@ -191,13 +193,17 @@
                         <h4><i class="icon fa fa-warning"></i> Dokumen belum dinilai!</h4>
                     </div>
                     @else
-                    <div class="alert alert-{{ $skp->penilaian->terpenuhi? 'success':'danger' }}">
-                        <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    <div class="alert alert-{{ $skp->penilaian->nilai == 'Dibawah Ekspetasi' ? 'warning': ( $skp->penilaian->nilai == 'Sesuai Ekspetasi' ? 'success' : 'info' ) }}">
+                        <h4><i class="icon fa fa-warning"></i> Dokemen telah di nilai <b>{{ $skp->penilaian->nilai }}</b></h4>
                     </div>
+                    {{-- <div class="alert alert-{{ $skp->penilaian->terpenuhi? 'success':'danger' }}">
+                        <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    </div> --}}
+                    <h4>Nilai: {{ $skp->penilaian->nilai == 'Dibawah Ekspetasi' ? '1': ( $skp->penilaian->nilai == 'Sesuai Ekspetasi' ? '2' : '3' ) }}</h4>
                     <h4>Catatan:</h4>
                     <p>{{ $skp->penilaian->catatan ?? '-' }}</p>
 
-                    @if (!$skp->penilaian->terpenuhi)
+                    {{-- @if (!$skp->penilaian->terpenuhi)
                     <form action="{{ route('dosen.penilaian.update', [$prodi->id, $skp->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
@@ -212,7 +218,7 @@
                         </div>
                         <button class="btn btn-primary mb-5" type="submit">Unggah Ulang File</button>
                     </form>
-                    @endif
+                    @endif --}}
                     @endif
                     @if($skp->berkas)
                     <embed src="{{ asset(Storage::url($skp->berkas)) }}" width="100%" style="height: 600px;" />

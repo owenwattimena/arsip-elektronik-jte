@@ -20,9 +20,9 @@ class PenilaianServiceImplement implements PenilaianService
     {
         return DB::transaction(function()use ($data){
             // return false;
-            if (is_string($data['terpenuhi'])) {
-                $data['terpenuhi'] = $data['terpenuhi'] == 'true';
-            }
+            // if (is_string($data['terpenuhi'])) {
+            //     $data['terpenuhi'] = $data['terpenuhi'] == 'true';
+            // }
             $data['created_by'] = \Auth::user()->id;
             $result = $this->repo->create($data);
             if ($result) {
@@ -30,7 +30,8 @@ class PenilaianServiceImplement implements PenilaianService
                 $prodi = $result->berkas->dosenPlpProdi->prodi->program_studi;
                 $tahunAkademik = $result->berkas->tahunAkademik->tahun_akademik;
                 $semester = $result->berkas->semester;
-                $nilai = $result->terpenuhi == true ? 'terpenuhi' : 'tidak terpenuhi';
+                // $nilai = $result->terpenuhi == true ? 'terpenuhi' : 'tidak terpenuhi';
+                $nilai = $result->nilai;
 
                 $dosenPlpId = $result->berkas->dosenPlpProdi->dosenPlp->id;
                 $info = [

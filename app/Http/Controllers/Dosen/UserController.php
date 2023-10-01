@@ -37,11 +37,17 @@ class UserController extends Controller
                 'email' => 'required',
             ]
         );
-        if($this->userService->updateDosenPlp($request->all()))
+        try{
+
+            if($this->userService->updateDosenPlp($request->all()))
+            {
+                return redirect()->back()->with(AlertMessage::success('Berhasil mengubah profil'));
+            }
+            return redirect()->back()->with(AlertMessage::danger('Gagal mengubah profil'));
+        }catch(\Exception $e)
         {
-            return redirect()->back()->with(AlertMessage::success('Berhasil mengubah profil'));
+            return redirect()->back()->with(AlertMessage::danger('Gagal mengubah profil. ' . $e->getMessage()));
         }
-        return redirect()->back()->with(AlertMessage::danger('Gagal mengubah profil'));
     }
 
     public function changePassword(Request $request)

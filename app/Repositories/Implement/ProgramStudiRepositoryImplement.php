@@ -18,15 +18,23 @@ class ProgramStudiRepositoryImplement implements ProgramStudiRepository
         $this->dosenPlpProdi = $dosenPlpProdi;
     }
 
-    public function getAll(): Collection
+    public function getAll(bool $withPlp = true): Collection
     {
-        return $this->prodi->all();
+        $result = $this->prodi->query();
+        if($withPlp) return $result->get();
+        return $result->where('program_studi', '!=', 'plp')->get();
     }
+
+
 
     public function getById(int $id): ProgramStudi
     {
         // return $this->prodi->with('dosen')->where('id',$id)->get()->first();
         return $this->prodi->findOrFail($id);
+    }
+    public function getPlp(): ProgramStudi|null
+    {
+        return $this->prodi->where('program_studi', 'plp')->first();
     }
     public function getDosenProdi(int $dosenId): Collection
     {

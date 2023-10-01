@@ -16,8 +16,8 @@
             <div class="row">
                 <div class="form-group col-md-5">
                     <label>Tahun Akademik</label>
-                    <select class="form-control" name="tahun_akademik_id">
-                        <option>---Pilih Tahun Akademik---</option>
+                    <select class="form-control" name="tahun_akademik_id" required>
+                        <option value="">---Pilih Tahun Akademik---</option>
                         @foreach ($tahunAkademik as $item)
                         <option {{ $item->id == $tahunAkademikId ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->tahun_akademik }}</option>
                         @endforeach
@@ -26,14 +26,14 @@
                 <div class="form-group col-md-5">
                     <label>Semester</label>
                     <select class="form-control" name="semester" required>
-                        <option>---Pilih Semester---</option>
+                        <option value="">---Pilih Semester---</option>
                         <option {{ 'ganjil' == $semester ? 'selected' : '' }} value="ganjil">Ganjil</option>
                         <option {{ 'genap' == $semester ? 'selected' : '' }} value="genap">Genap</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
                     <label class="text-white">_</label>
-                    <button class="btn btn-success form-control">Filter</button>
+                    <button type="submit" class="btn btn-success form-control">Filter</button>
                 </div>
             </div>
         </form>
@@ -72,9 +72,11 @@
                     </div>
                     @endif
                     @if ($bkd->penilaian)
-                    <div class="alert alert-{{ $bkd->penilaian->terpenuhi? 'success':'danger' }}">
-                        <h4><i class="icon fa fa-warning"></i> {!! $bkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    <div class="alert alert-{{ $bkd->penilaian->nilai == 'Dibawah Ekspetasi' ? 'warning': ( $bkd->penilaian->nilai == 'Sesuai Ekspetasi' ? 'success' : 'info' ) }}">
+                        {{-- <h4><i class="icon fa fa-warning"></i> {!! $bkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4> --}}
+                        <h4><i class="icon fa fa-warning"></i> Dokemen telah di nilai <b>{{ $bkd->penilaian->nilai }}</b></h4>
                     </div>
+                    <h4>Nilai: {{ $bkd->penilaian->nilai == 'Dibawah Ekspetasi' ? '1': ( $bkd->penilaian->nilai == 'Sesuai Ekspetasi' ? '2' : '3' ) }}</h4>
                     <h4>Catatan:</h4>
                     <p>{{ $bkd->penilaian->catatan ?? '-' }}</p>
                     @endif
@@ -95,8 +97,9 @@
                             <label>Nilai</label>
                             <select class="form-control" name="terpenuhi" required>
                                 <option value="">---Pilih Nilai---</option>
-                                <option value="true">Terpenuhi</option>
-                                <option value="false">Tidak Terpenuhi</option>
+                                <option value="Dibawah Ekspetasi">Dibawah Ekspetasi</option>
+                                <option value="Sesuai Ekspetasi">Sesuai Ekspetasi</option>
+                                <option value="Diatas Ekspetasi">Diatas Ekspetasi</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -137,9 +140,14 @@
                     </div>
                     @endif
                     @if ($lkd->penilaian)
-                    <div class="alert alert-{{ $lkd->penilaian->terpenuhi? 'success':'danger' }}">
-                        <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    <div class="alert alert-{{ $lkd->penilaian->nilai == 'Dibawah Ekspetasi' ? 'warning': ( $lkd->penilaian->nilai == 'Sesuai Ekspetasi' ? 'success' : 'info' ) }}">
+                        {{-- <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4> --}}
+                        <h4><i class="icon fa fa-warning"></i> Dokemen telah di nilai <b>{{ $lkd->penilaian->nilai }}</b></h4>
                     </div>
+                    {{-- <div class="alert alert-{{ $lkd->penilaian->terpenuhi? 'success':'danger' }}">
+                        <h4><i class="icon fa fa-warning"></i> {!! $lkd->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    </div> --}}
+                    <h4>Nilai: {{ $lkd->penilaian->nilai == 'Dibawah Ekspetasi' ? '1': ( $lkd->penilaian->nilai == 'Sesuai Ekspetasi' ? '2' : '3' ) }}</h4>
                     <h4>Catatan:</h4>
                     <p>{{ $lkd->penilaian->catatan ?? '-' }}</p>
                     @endif
@@ -158,10 +166,11 @@
                         <input type="hidden" name="berkas_id" value="{{ $lkd->id }}" required>
                         <div class="form-group">
                             <label>Nilai</label>
-                            <select class="form-control" name="terpenuhi" required>
+                            <select class="form-control" name="nilai" required>
                                 <option value="">---Pilih Nilai---</option>
-                                <option value="true">Terpenuhi</option>
-                                <option value="false">Tidak Terpenuhi</option>
+                                <option value="Dibawah Ekspetasi">Dibawah Ekspetasi</option>
+                                <option value="Sesuai Ekspetasi">Sesuai Ekspetasi</option>
+                                <option value="Diatas Ekspetasi">Diatas Ekspetasi</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -199,9 +208,14 @@
                     </div>
                     @endif
                     @if ($skp->penilaian)
-                    <div class="alert alert-{{ $skp->penilaian->terpenuhi? 'success':'danger' }}">
-                        <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    <div class="alert alert-{{ $skp->penilaian->nilai == 'Dibawah Ekspetasi' ? 'warning': ( $skp->penilaian->nilai == 'Sesuai Ekspetasi' ? 'success' : 'info' ) }}">
+                        {{-- <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4> --}}
+                        <h4><i class="icon fa fa-warning"></i> Dokemen telah di nilai <b>{{ $skp->penilaian->nilai }}</b></h4>
                     </div>
+                    {{-- <div class="alert alert-{{ $skp->penilaian->terpenuhi? 'success':'danger' }}">
+                        <h4><i class="icon fa fa-warning"></i> {!! $skp->penilaian->terpenuhi? 'Dokemen telah di nilai <b>TERPENUHI</b>':'Dokemen telah di nilai <b>TIDAK TERPENUHI</b>' !!}</h4>
+                    </div> --}}
+                    <h4>Nilai: {{ $skp->penilaian->nilai == 'Dibawah Ekspetasi' ? '1': ( $skp->penilaian->nilai == 'Sesuai Ekspetasi' ? '2' : '3' ) }}</h4>
                     <h4>Catatan:</h4>
                     <p>{{ $skp->penilaian->catatan ?? '-' }}</p>
                     @endif
@@ -220,10 +234,11 @@
                         <input type="hidden" name="berkas_id" value="{{ $skp->id }}" required>
                         <div class="form-group">
                             <label>Nilai</label>
-                            <select class="form-control" name="terpenuhi" required>
+                            <select class="form-control" name="nilai" required>
                                 <option value="">---Pilih Nilai---</option>
-                                <option value="true">Terpenuhi</option>
-                                <option value="false">Tidak Terpenuhi</option>
+                                <option value="Dibawah Ekspetasi">Dibawah Ekspetasi</option>
+                                <option value="Sesuai Ekspetasi">Sesuai Ekspetasi</option>
+                                <option value="Diatas Ekspetasi">Diatas Ekspetasi</option>
                             </select>
                         </div>
                         <div class="form-group">

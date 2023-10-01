@@ -8,9 +8,10 @@ use Livewire\Component;
 class Tambah extends Component
 {
     protected UserService $userService;
+    public $jenis;
     public string $dilihatOleh;
     public $users;
-    public $dosenPlpId;
+    public $dosenPlpId = [];
     public function boot()
     {
         $this->userService = app(UserService::class);

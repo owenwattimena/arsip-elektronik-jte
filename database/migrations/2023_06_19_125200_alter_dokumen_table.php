@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('berkas', function (Blueprint $table) {
-            $table->string('berkas')->nullable()->change();
+        Schema::table('dokumen', function (Blueprint $table) {
+            $table->enum('jenis', ['sk', 'surat_tugas'])->after('dokumen');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('berkas', function (Blueprint $table) {
-            $table->string('berkas')->change();
+        Schema::table('dokumen', function (Blueprint $table) {
+            $table->dropColumn('jenis');
         });
     }
 };

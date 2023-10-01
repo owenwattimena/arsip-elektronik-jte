@@ -21,6 +21,7 @@ class MainController extends Controller
         $data['totalDosen'] = $this->userService->totalDosen();
         $data['totalPlp'] = $this->userService->totalPlp();
         $data['informasi'] = $this->infoService->get(infoAdmin: true);
+        // dd($data);
         return view('dashboard.admin.beranda.index', $data);
     }
 }

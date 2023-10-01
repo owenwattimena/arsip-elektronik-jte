@@ -17,7 +17,7 @@ class ProgramStudiController extends Controller
 
     public function index()
     {
-        $data['prodi'] = $this->prodiService->getAll();
+        $data['prodi'] = $this->prodiService->getAll(false);
         return view('dashboard.admin.prodi.index', $data);
     }
 

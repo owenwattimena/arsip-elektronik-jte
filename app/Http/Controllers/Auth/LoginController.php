@@ -14,7 +14,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        if (\Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (\Auth::attempt(['username' => $request->username, 'password' => $request->password, 'role'=>$request->role])) {
             if(\Auth::user()->role == 'admin')
             {
                 return redirect('/admin/home.html');

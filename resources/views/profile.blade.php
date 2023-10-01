@@ -23,7 +23,7 @@
     </div>
     <div class="box-body">
         @if (auth()->user()->role != 'admin')
-        {!! $pengaturan->profile !!}
+        {!! $pengaturan->profile ?? '' !!}
         @else
         <form action="" method="POST">
             @csrf

@@ -17,13 +17,13 @@ class DokumenServiceImplement implements DokumenService
         $this->dokumenRepo = $dokumenRepo;
     }
 
-    public function getAll(): Collection
+    public function getAll(?string $jenis=null): Collection
     {
-        return $this->dokumenRepo->getAll();
+        return $this->dokumenRepo->getAll(jenis: $jenis);
     }
-    public function get(string $role): Collection
+    public function get(string $role, ?string $jenis=null): Collection
     {
-        return $this->dokumenRepo->get($role);
+        return $this->dokumenRepo->get($role, jenis: $jenis);
     }
     public function create(array $data): bool
     {
@@ -35,13 +35,27 @@ class DokumenServiceImplement implements DokumenService
 
                 $dataDokumen['dokumen'] = config('app.dokumen_url') . '/' . $namaDokumen;
             }
+            $dataDokumen['jenis'] = $data['jenis'];
             $dataDokumen['dilihat_oleh'] = $data['dilihat_oleh'];
+            if($dataDokumen['dilihat_oleh'] == 'dosen')
+            {
+                if(!isset($data['dosen_plp_id']))
+                {
+                    if($dataDokumen['dilihat_oleh'] != 'all')
+                    {
+                        $dataDokumen['dilihat_oleh'] = $data['dilihat_oleh'] . '_all';
+                    }
+                    // throw new \Exception("Silahkan pilih dosen terlebih dahulu.");
+                }
+            }
             $dokumen = $this->dokumenRepo->create($dataDokumen);
             if ($dokumen){
                 if(isset($data['dosen_plp_id'])){
-                    $dokumenAkses['dosen_plp_id'] = $data['dosen_plp_id'];
-                    $dokumenAkses['dokumen_id'] = $dokumen->id;
-                    $this->dokumenRepo->createDocumentAccess($dokumenAkses);
+                    for ($i=0; $i < count($data['dosen_plp_id']); $i++) {
+                        $dokumenAkses['dosen_plp_id'] = $data['dosen_plp_id'][$i];
+                        $dokumenAkses['dokumen_id'] = $dokumen->id;
+                        $this->dokumenRepo->createDocumentAccess($dokumenAkses);
+                    }
                 }
                 return true;
             }

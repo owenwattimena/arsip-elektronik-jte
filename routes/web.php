@@ -56,13 +56,15 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('dosen_plp')->middleware(['dosen_plp'])->group(function(){
         Route::get('/home.html', [MainController::class, 'index'])->name('dosen.main');
         Route::get('/profile.html', [\App\Http\Controllers\PengaturanController::class, 'index'])->name('dosen.profile');
+        Route::get('/penilaian/plp', [\App\Http\Controllers\Dosen\PenilaianController::class, 'index']); // tidak diberi nama agar tidak conflic
         Route::get('/penilaian/prodi/{id}', [\App\Http\Controllers\Dosen\PenilaianController::class, 'index'])->name('dosen.penilaian');
         Route::post('/penilaian/prodi/{id}', [\App\Http\Controllers\Dosen\PenilaianController::class, 'create'])->name('dosen.penilaian.create');
         Route::put('/penilaian/prodi/{id}/berkas/{berkasId}', [\App\Http\Controllers\Dosen\PenilaianController::class, 'update'])->name('dosen.penilaian.update');
         Route::get('/profil', [\App\Http\Controllers\Dosen\UserController::class, 'index'])->name('dosen.profil');
         Route::put('/profil', [\App\Http\Controllers\Dosen\UserController::class, 'update'])->name('dosen.profil.update');
         Route::put('/profil/change-password', [\App\Http\Controllers\Dosen\UserController::class, 'changePassword'])->name('dosen.profil.change-password');
-        Route::get('/dokumen', [\App\Http\Controllers\Dosen\DokumenController::class, 'index'])->name('dosen.dokumen');
+        Route::get('/dokumen/sk', [\App\Http\Controllers\Dosen\DokumenController::class, 'suratKeterangan'])->name('dosen.dokumen.sk');
+        Route::get('/dokumen/surat-tugas', [\App\Http\Controllers\Dosen\DokumenController::class, 'suratTugas'])->name('dosen.dokumen.surat-tugas');
 
     });
 
@@ -82,7 +84,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/penilaian/prodi/{id}/dosen-plp/{dosenPlpId}', [PenilaianController::class, 'nilai'])->name('admin.penilaian.nilai');
         Route::post('/penilaian/prodi/{id}/dosen-plp/{dosenPlpId}', [PenilaianController::class, 'create'])->name('admin.penilaian.nilai.create');
 
-        Route::get('/dokumen', [DokumenController::class, 'index'])->name('admin.dokumen');
+        Route::get('/dokumen/sk', [DokumenController::class, 'suratKetetapan'])->name('admin.dokumen.sk');
+        Route::get('/dokumen/surat-tugas', [DokumenController::class, 'suratTugas'])->name('admin.dokumen.surat-tugas');
         Route::post('/dokumen', [DokumenController::class, 'create'])->name('admin.dokumen.create');
 
         Route::get('/pemberitahuan', [PemberitahuanController::class, 'index'])->name('admin.informasi');
@@ -90,7 +93,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/pemberitahuan', [PemberitahuanController::class, 'delete'])->name('admin.informasi.delete');
 
         Route::get('user', [UserController::class, 'index'])->name('admin.user');
+        Route::get('user/{id}', [UserController::class, 'biodata'])->name('admin.user.biodata');
+        Route::put('user/{id}/ganti-password', [UserController::class, 'changePassword'])->name('admin.user.change-password');
         Route::post('user', [UserController::class, 'create'])->name('admin.user.create');
+
+
     });
     Route::get('keluar', function(){
         Auth::logout();

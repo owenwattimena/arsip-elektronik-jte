@@ -27,10 +27,11 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page"   style="background-image: url('{{ asset('assets/img/jte-building.jpeg') }}'); background-size: cover">
+<body class="hold-transition login-page" style="padding-bottom: 50px;">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>{{ config('app.name') }}</b></a>
+            <a href="#"><b>{{ config('app.name') }}</b></a>
+            {{-- <img src="{{ asset('assets/img/logo.jpeg') }}" width="30%" alt=""> --}}
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -56,17 +57,25 @@
                     <input type="password" class="form-control" name="password" placeholder="Password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     @error('password') <span class="help-block">{{ $message }}</span> <br> @enderror
-
+                </div>
+                <!-- select -->
+                <div class="form-group">
+                    <select class="form-control" name="role" required>
+                        <option value="">---PILIH STATUS---</option>
+                        <option value="admin">Admin</option>
+                        <option value="dosen">Dosen</option>
+                        <option value="plp">PLP</option>
+                    </select>
                 </div>
                 <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-xs-1"></div>
+                    <div class="col-xs-6">
                         <div class="checkbox icheck">
                             <label>
                                 <input type="checkbox"> Remember Me
                             </label>
                         </div>
                     </div>
-                    <!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">MASUK</button>
                     </div>

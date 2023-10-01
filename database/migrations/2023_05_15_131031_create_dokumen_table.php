@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dokumen', function (Blueprint $table) {
             $table->id();
             $table->string('dokumen');
-            $table->enum('dilihat_oleh', ['all','dosen','plp']);
+            $table->enum('dilihat_oleh', ['all','dosen', 'dosen_all','plp']);
             $table->timestamps();
         });
     }

@@ -37,11 +37,23 @@
             @endforeach
         </ul>
     </li>
-    <li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-upload"></i> <span>Dokumen</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ route('admin.dokumen.sk') }}"><i class="fa fa-circle-o"></i> SK Direktur</a></li>
+            <li><a href="{{ route('admin.dokumen.surat-tugas') }}"><i class="fa fa-circle-o"></i> Surat Tugas</a></li>
+        </ul>
+    </li>
+    {{-- <li>
         <a href="{{ route('admin.dokumen') }}">
             <i class="fa fa-upload"></i> <span>Dokumen</span>
         </a>
-    </li>
+    </li> --}}
     <li>
         <a href="{{ route('admin.informasi') }}">
             <i class="fa fa-info"></i> <span>Pemberitahuan</span>

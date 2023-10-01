@@ -15,6 +15,7 @@ class DosenPlp extends Model
         'user_id',
         'nama_lengkap',
         'nip',
+        'jabatan_fungsional',
         'pangkat_golongan',
         'jenis_kelamin',
         'tempat_lahir',

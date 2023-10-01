@@ -14,9 +14,9 @@ class ProgramStudiServiceImplement implements ProgramStudiService
     {
         $this->repo = $repo;
     }
-    public function getAll(): Collection
+    public function getAll(bool $withPlp = true): Collection
     {
-        return $this->repo->getAll();
+        return $this->repo->getAll($withPlp);
     }
     public function getById(int $id): ProgramStudi
     {

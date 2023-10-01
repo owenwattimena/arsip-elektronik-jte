@@ -15,22 +15,52 @@
                     @method('put')
                     <div class="box-body">
                         <div class="form-group @error('nama_lengkap') has-error @enderror">
-                            <label for="nama_lengkap">NAMA LENGKAP</label>
+                            <label for="nama_lengkap">NAMA LENGKAP <span class="text-danger ">*</span> </label>
                             <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" value="{{ old('nama_lengkap', auth()->user()->dosenPlp->nama_lengkap) }}" placeholder="Masukan nama lengkap" required>
                             @error('nama_lengkap') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
                         <div class="form-group @error('nip') has-error @enderror">
-                            <label for="nip">NIP</label>
+                            <label for="nip">NIP <span class="text-danger ">*</span></label>
                             <input type="text" class="form-control" name="nip" id="nip" value="{{ old('nip', auth()->user()->dosenPlp->nip) }}" placeholder="Masukan NIP">
                             @error('nip') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
+                        <div class="form-group @error('jabatan_fungsional') has-error @enderror">
+                            <label for="nidn">JABATAN FUNGSIONAL <span class="text-danger ">*</span></label>
+                            @php
+                                $jabatan = old('jabatan_fungsional', auth()->user()->dosenPlp->jabatan_fungsional);
+                            @endphp
+                            <select class="form-control" name="jabatan_fungsional">
+                                <option value="">---PILIH JABATAN FUNGSIONAL---</option>
+                                <option {{ $jabatan == "Asisten Ahli" ? 'selected' : '' }} value="Asisten Ahli">Asisten Ahli</option>
+                                <option {{ $jabatan == "Lektor" ? 'selected' : '' }} value="Lektor">Lektor</option>
+                                <option {{ $jabatan == "Lektor Kepala" ? 'selected' : '' }} value="Lektor Kepala">Lektor Kepala</option>
+                            </select>
+                            @error('jabatan_fungsional') <span class="help-block">{{ $message }}</span> <br> @enderror
+                        </div>
                         <div class="form-group @error('pangkat_golongan') has-error @enderror">
-                            <label for="pangkat_golongan">PANGKAT/GOLONGAN</label>
-                            <input type="text" class="form-control" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan', auth()->user()->dosenPlp->pangkat_golongan) }}" placeholder="Masukan pangkat/golongan">
+                            <label for="pangkat_golongan">PANGKAT/GOLONGAN <span class="text-danger ">*</span></label>
+                            {{-- <input type="text" class="form-control" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan', auth()->user()->dosenPlp->pangkat_golongan) }}" placeholder="Masukan pangkat/golongan"> --}}
+                            @php
+                                $pangkatGolongan = old('pangkat_golongan', auth()->user()->dosenPlp->pangkat_golongan);
+                            @endphp
+                            <select class="form-control" name="pangkat_golongan">
+                                <option value="">---PILIH PANGKAT GOLONGAN---</option>
+                                <option {{ $pangkatGolongan == "II/A" ? 'selected' : '' }} value="II/A">II/A</option>
+                                <option {{ $pangkatGolongan == "II/B" ? 'selected' : '' }} value="II/B">II/B</option>
+                                <option {{ $pangkatGolongan == "II/C" ? 'selected' : '' }} value="II/C">II/C</option>
+                                <option {{ $pangkatGolongan == "II/D" ? 'selected' : '' }} value="II/D">II/D</option>
+                                <option {{ $pangkatGolongan == "III/A" ? 'selected' : '' }} value="III/A">III/A</option>
+                                <option {{ $pangkatGolongan == "III/B" ? 'selected' : '' }} value="III/B">III/B</option>
+                                <option {{ $pangkatGolongan == "III/C" ? 'selected' : '' }} value="III/C">III/C</option>
+                                <option {{ $pangkatGolongan == "III/D" ? 'selected' : '' }} value="III/D">III/D</option>
+                                <option {{ $pangkatGolongan == "IV/A" ? 'selected' : '' }} value="IV/A">IV/A</option>
+                                <option {{ $pangkatGolongan == "IVB" ? 'selected' : '' }} value="IV/B">IV/B</option>
+                                <option {{ $pangkatGolongan == "IV/C" ? 'selected' : '' }} value="IV/C">IV/C</option>
+                            </select>
                             @error('pangkat_golongan') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
                         <div class="form-group @error('jenis_kelamin') has-error @enderror">
-                            <label for="jenis_kelamin">JENIS KELAMIN</label>
+                            <label for="jenis_kelamin">JENIS KELAMIN <span class="text-danger ">*</span></label>
                             <select class="form-control" name="jenis_kelamin" id="jenis_kelamin" placeholder="Masukan pangkat/golongan" required>
                                 <option value="l" {{ auth()->user()->dosenPlp->jenis_kelamin == 'l' ? 'selected' : '' }}>Laki-laki</option>
                                 <option value="p" {{ auth()->user()->dosenPlp->jenis_kelamin == 'p' ? 'selected' : '' }}>Perempuan</option>
@@ -39,18 +69,18 @@
                         </div>
                         <div class="row">
                             <div class="col-md-7 form-group @error('tempat_lahir') has-error @enderror">
-                                <label for="tempat_lahir">TEMPAT LAHIR</label>
+                                <label for="tempat_lahir">TEMPAT LAHIR <span class="text-danger ">*</span></label>
                                 <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" value="{{ old('tempat_lahir', auth()->user()->dosenPlp->tempat_lahir) }}" placeholder="Masukan tempat lahir" required>
                                 @error('tempat_lahir') <span class="help-block">{{ $message }}</span> <br> @enderror
                             </div>
                             <div class="col-md-5 form-group @error('tanggal_lahir') has-error @enderror">
-                                <label for="tanggal_lahir">TANGGAL LAHIR</label>
+                                <label for="tanggal_lahir">TANGGAL LAHIR <span class="text-danger ">*</span></label>
                                 <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir', auth()->user()->dosenPlp->tanggal_lahir) }}" placeholder="Masukan tanggal lahir" required>
                                 @error('tanggal_lahir') <span class="help-block">{{ $message }}</span> <br> @enderror
                             </div>
                         </div>
                         <div class="form-group @error('agama') has-error @enderror">
-                            <label for="agama">AGAMA</label>
+                            <label for="agama">AGAMA <span class="text-danger ">*</span></label>
                             <select class="form-control" name="agama" id="agama" required>
                                 <option value="Kristen" {{ auth()->user()->dosenPlp->agama == 'Kristen' ? 'selected' : '' }}>Kristen</option>
                                 <option value="Katolik" {{ auth()->user()->dosenPlp->agama == 'Katolik' ? 'selected' : '' }}>Katolik</option>
@@ -62,17 +92,17 @@
                             @error('agama') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
                         <div class="form-group @error('alamat') has-error @enderror">
-                            <label for="alamat">ALAMAT</label>
+                            <label for="alamat">ALAMAT <span class="text-danger ">*</span></label>
                             <textarea class="form-control" name="alamat" id="alamat" placeholder="Masukan alamat" required>{{ old('alamat', auth()->user()->dosenPlp->alamat) }}</textarea>
                             @error('alamat') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
                         <div class="form-group @error('telepon') has-error @enderror">
-                            <label for="telepon">TELEPON</label>
+                            <label for="telepon">TELEPON <span class="text-danger ">*</span></label>
                             <input type="tel" class="form-control" name="telepon" id="telepon" value="{{ old('telepon', auth()->user()->dosenPlp->telepon) }}" placeholder="Masukan nomor telepon" required>
                             @error('telepon') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>
                         <div class="form-group @error('email') has-error @enderror">
-                            <label for="email">EMAIL</label>
+                            <label for="email">EMAIL <span class="text-danger ">*</span></label>
                             <input type="email" class="form-control" name="email" id="email" value="{{ old('email', auth()->user()->dosenPlp->email) }}" placeholder="Masukan alamat email" required>
                             @error('email') <span class="help-block">{{ $message }}</span> <br> @enderror
                         </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Dokumen extends Model
@@ -13,6 +14,7 @@ class Dokumen extends Model
 
     protected $fillable = [
         'dokumen',
+        'jenis',
         'dilihat_oleh'
     ];
 
@@ -21,8 +23,9 @@ class Dokumen extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function akses(): HasOne
+    public function akses(): HasMany
     {
-        return $this->hasOne(DokumenAkses::class, 'dokumen_id', 'id');
+        // return $this->hasMany(DokumenAkses::class, 'dokumen_id', 'id');
+        return $this->hasMany(DokumenAkses::class, 'dokumen_id', 'id');
     }
 }

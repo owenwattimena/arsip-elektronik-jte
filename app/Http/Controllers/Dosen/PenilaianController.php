@@ -29,7 +29,7 @@ class PenilaianController extends Controller
         $this->berkasService = $berkasService;
         $this->userService = $userService;
     }
-    public function index(Request $request, int $prodiId)
+    public function index(Request $request, int $prodiId = 0)
     {
         $data['tahunAkademikId'] = null;
         $data['semester'] = null;
